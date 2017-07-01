@@ -15,15 +15,7 @@ public class Lootable : MonoBehaviour {
 	void Update () {
 		
 	}
-
-	void OnCollisionEnter2D(Collision2D coll) {
-		Debug.Log ("[Lootable] OnCollisionEnter2D");
-
-		if (coll.gameObject.tag == "Player") {
-			Debug.Log ("Looted");
-			Destroy (this.gameObject);
-		}
-	}
+		
 
 	void OnTriggerEnter2D(Collider2D other) {
 		Debug.Log ("[Lootable] OnCollisionEnter2D");
