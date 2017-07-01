@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Building : MonoBehaviour {
-		
+	protected List<Sprite> listSprite = new List<Sprite> ();
+	protected List<Sprite>.Enumerator enumerator;
 	void Start () {
-
+		enumerator = listSprite.GetEnumerator ();
 	}
 
 	// Update is called once per frame
@@ -14,7 +15,7 @@ public class Building : MonoBehaviour {
 	}
 
 
-	void OnTriggerEnter2D(Collider2D other) {
+	protected void OnTriggerEnter2D(Collider2D other) {
 		Debug.Log ("[Building] OnCollisionEnter2D");
 
 		if (other.gameObject.tag == "Player") {
@@ -24,7 +25,7 @@ public class Building : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerExit2D(Collider2D other){
+	protected void OnTriggerExit2D(Collider2D other){
 		Debug.Log ("[Building] OnCollisionExit2D");
 
 		if (other.gameObject.tag == "Player") {
@@ -34,12 +35,12 @@ public class Building : MonoBehaviour {
 		}
 	}
 
-	void UpgradeBuilding()
+	protected void UpgradeBuilding()
 	{
 
 	}
 
-	void Interact()
+	protected void Interact()
 	{
 		Debug.Log ("[Building] Player Interacted");
 	}

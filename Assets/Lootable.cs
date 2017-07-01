@@ -21,7 +21,6 @@ public class Lootable : MonoBehaviour {
 		Debug.Log ("[Lootable] OnCollisionEnter2D");
 
 		if (other.gameObject.tag == "Player") {
-			Debug.Log ("Looted");
 			Destroy (this.gameObject);
 		}
 	}
