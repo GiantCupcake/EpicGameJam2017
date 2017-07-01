@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Building : MonoBehaviour {
+	
 	protected List<Sprite> listSprite = new List<Sprite> ();
 	protected List<Sprite>.Enumerator enumerator;
+
+	public Inventory inventory;
+
 	void Start () {
 		enumerator = listSprite.GetEnumerator ();
 	}
