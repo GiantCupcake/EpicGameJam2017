@@ -24,6 +24,7 @@ public class WorldGenerator : MonoBehaviour {
 
 	public GameObject groundCube;
 	public GameObject firePit;
+	public GameObject undergroundCube;
 	public Sprite[] groundSprites;
 	
 	// Use this for initialization
@@ -37,24 +38,27 @@ public class WorldGenerator : MonoBehaviour {
 		int maxX = mapPng.width;
 		int maxY = mapPng.height;
 		int i = 0;
+		int y2;
 		Vector3 pos = new Vector3 (0, 0, 0);
 		GameObject currCube;
 
 		for (int y = 0; y < maxY; y++) {
 			for (int x = 0; x < maxX; x++) {
-				Debug.Log (pix[x + y*maxX]);
-
-				if (!pix [x + y * maxX].Equals(emptyColor))
-					pos = new Vector3 (x, y - 32, 0);
-				
+				pos = new Vector3 (x, y - 32, 0);
 				if (pix [x + y * maxX].Equals (groundColor)) {
 					currCube = Instantiate (groundCube, pos, Quaternion.identity);
 					currCube.GetComponent<SpriteRenderer> ().sprite = groundSprites [UnityEngine.Random.Range (0, groundSprites.Length)];
+					y2 = y - 1;
+					while (y2 >= 0) {
+						pos = new Vector3 (x, y2 - 32, 0);
+						currCube = Instantiate (undergroundCube, pos, Quaternion.identity);
+						pix [x + y2 * maxY] = emptyColor;
+						y2--;
+					}
 				} else if (pix [x + y * maxX].Equals (fireColor)) {
 					currCube = Instantiate (firePit, pos, Quaternion.identity);
 				}
 			}
-			i++;
 		}
 		/*
 		int i = 0;
