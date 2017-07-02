@@ -11,6 +11,16 @@ public class InteractableNPC : MonoBehaviour {
 	public TextAsset dialogFile;
 
 	public string npcName;
+
+	public float roamDistance = 5f;
+	public float speed = 1f;
+
+	private bool moving;
+	private float startingPos = 0f;
+	private float goal;
+	private Vector3 lastPos;
+	private float pauseBeforeMoving;
+
 	// Use this for initialization
 	void Start () {
 		parseTextAsset (dialogFile);
@@ -19,11 +29,32 @@ public class InteractableNPC : MonoBehaviour {
 		dialogBand.SetActive (false);
 
 		enumerator = dialogs.GetEnumerator ();
+
+		startingPos = transform.position.x;
+		goal = startingPos + Random.Range(-(roamDistance), roamDistance);
+		moveToGoal ();
 	}
-	
+
+	void moveToGoal(){
+		if (Mathf.RoundToInt(transform.position.x) == Mathf.RoundToInt(goal)) {
+			moving = false;
+			pauseBeforeMoving = Random.Range(0f, 3f) + Time.time;
+		} else {
+			moving = true;
+			Vector3 dest = new Vector3 (goal, transform.position.y, transform.position.z);
+			transform.position = Vector3.Lerp (transform.position, dest, Time.deltaTime);
+			lastPos = transform.position;
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
-		
+		if (pauseBeforeMoving < Time.time) {
+			if (!moving) {
+				goal = startingPos + Random.Range (-(roamDistance), roamDistance);
+			}
+			moveToGoal ();
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
