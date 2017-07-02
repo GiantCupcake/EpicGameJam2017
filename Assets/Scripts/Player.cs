@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
 	private GameObject interactableObject;
+	private UnityEngine.UI.Text textInteract;
     //Movement
     private float hSpeed = 0.0f;
     private float vSpeed = 0.0f;
@@ -15,7 +16,7 @@ public class Player : MonoBehaviour {
     private float maxJumpTimer = 60.0f;
     private Rigidbody2D rig;
     //Stats
-    private int pv;
+    private int pv = 50;
     private bool isGrounded = false;
     private bool jumpStarted = false;
     public Transform groundCheck;
@@ -29,6 +30,9 @@ public class Player : MonoBehaviour {
     void Start () {
         //get the Rigidbody2D component
         rig = this.transform.GetComponent<Rigidbody2D>();
+
+		textInteract = this.GetComponentInChildren<UnityEngine.UI.Text> ();
+		textInteract.enabled = false;
 	}
 	// Update is called once per frame
 	void Update () {
@@ -40,8 +44,11 @@ public class Player : MonoBehaviour {
     public bool takeDamage(int _d)
     {
         this.pv -= _d;
-        if (_d < 0)
-            return true;
+		if (_d < 0) {
+			Debug.Log ("GameEnded");
+			Application.Quit ();
+			return true;
+		}
         else
             return false;
     }
@@ -111,9 +118,11 @@ public class Player : MonoBehaviour {
 
 	public void SetInteractableObject(GameObject interactable){
 		this.interactableObject = interactable;
+		textInteract.enabled = true;
 	}
 
 	public void ClearInteractableObject(){
 		this.interactableObject = null;
+		textInteract.enabled = false;
 	}
 }
