@@ -41,6 +41,10 @@ public class InteractableNPC : MonoBehaviour {
 			pauseBeforeMoving = Random.Range(0f, 3f) + Time.time;
 		} else {
 			moving = true;
+			if (goal < transform.position.x)
+				GetComponent<SpriteRenderer> ().flipX = false;
+			else
+				GetComponent<SpriteRenderer> ().flipX = true;
 			Vector3 dest = new Vector3 (goal, transform.position.y, transform.position.z);
 			transform.position = Vector3.Lerp (transform.position, dest, Time.deltaTime);
 			lastPos = transform.position;
