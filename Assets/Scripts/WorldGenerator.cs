@@ -4,16 +4,30 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldGenerator : MonoBehaviour {
-
+	//Ground
 	public GameObject groundCube;
-	public GameObject firePit;
 	public GameObject undergroundCube;
+	//Buildings
+	public GameObject firePit;
 	public GameObject berlinWall;
-	public GameObject loo;
 	public GameObject brasserie;
+	public GameObject loo;
 	public GameObject windMill;
+	//NPC
+	public GameObject double_sirene;
+	public GameObject witch;
+	//Deco
+	public Sprite arbreRadioactif;
+	public Sprite barilNucleaire;
+	public GameObject corn_deco;
+	public GameObject flower_red;
+	public GameObject flower_violet;
+	public Sprite flower_white;
+	public Sprite sapin_radioactif;
 
 	public Sprite[] groundSprites;
+	public Sprite[] buissonSprites;
+	public Sprite[] cloudSprites;
 	
 	// Use this for initialization
 	void Start ()
