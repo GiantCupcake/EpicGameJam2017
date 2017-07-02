@@ -20,8 +20,6 @@ public class Building : MonoBehaviour {
 
 
 	protected void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log ("[Building] OnCollisionEnter2D");
-
 		if (other.gameObject.tag == "Player") {
 			Debug.Log ("Entered Building CollideBox");
 			Player player = other.gameObject.GetComponent<Player>();
