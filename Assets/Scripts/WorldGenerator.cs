@@ -132,7 +132,6 @@ public class WorldGenerator : MonoBehaviour
 		Vector2 position;
 		Array values = Enum.GetValues (typeof(deco));
 		deco chosen = (deco)values.GetValue (UnityEngine.Random.Range (0, values.Length));
-		print (chosen);
 		switch (chosen) {
 		case deco.arbreRadioactif:
 			position = new Vector2 (pos.x, pos.y + 0.5f);
