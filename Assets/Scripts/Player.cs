@@ -24,12 +24,15 @@ public class Player : MonoBehaviour {
     float groundRadius = 0.1f;
     private List<int> keyBuffer;
 
+	public Animator animator;
+	private SpriteRenderer spriteRenderer;
     private int bufferTime = 30;
     private int bufferCounter = 0;
 
     void Start () {
         //get the Rigidbody2D component
         rig = this.transform.GetComponent<Rigidbody2D>();
+		spriteRenderer = GetComponent<SpriteRenderer> ();
 
 		textInteract = this.GetComponentInChildren<UnityEngine.UI.Text> ();
 		textInteract.enabled = false;
@@ -65,6 +68,8 @@ public class Player : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.A))
         {
+			animator.SetBool("idle", false);
+			spriteRenderer.flipX = true;
             if (rig.velocity.x > -maxHVelocity)
             {
                 if (isGrounded)
@@ -80,6 +85,8 @@ public class Player : MonoBehaviour {
         }
         else if (Input.GetKey(KeyCode.D))
         {
+			animator.SetBool("idle", false);
+			spriteRenderer.flipX = false;
             if (rig.velocity.x < maxHVelocity)
             {
                 if (isGrounded)
@@ -93,6 +100,8 @@ public class Player : MonoBehaviour {
             }
 
         }
+		else
+			animator.SetBool("idle", true);
         if (Input.GetKeyDown(KeyCode.W))
         {
             /*

@@ -26,7 +26,7 @@ public class InteractableNPC : MonoBehaviour {
 		parseTextAsset (dialogFile);
 
 		dialogBand = GameObject.FindWithTag ("DialogBand");
-		dialogBand.SetActive (false);
+		//dialogBand.SetActive (false);
 
 		enumerator = dialogs.GetEnumerator ();
 
@@ -46,7 +46,7 @@ public class InteractableNPC : MonoBehaviour {
 			else
 				GetComponent<SpriteRenderer> ().flipX = true;
 			Vector3 dest = new Vector3 (goal, transform.position.y, transform.position.z);
-			transform.position = Vector3.Lerp (transform.position, dest, Time.deltaTime);
+			transform.position = Vector3.Lerp (transform.position, dest, Time.deltaTime * speed);
 			lastPos = transform.position;
 		}
 	}
@@ -62,8 +62,6 @@ public class InteractableNPC : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log ("[NPCInteractable] OnCollisionEnter2D");
-
 		if (other.gameObject.tag == "Player") {
 			Debug.Log ("Entered NPC CollideBox");
 			Player player = other.gameObject.GetComponent<Player>();
@@ -72,10 +70,7 @@ public class InteractableNPC : MonoBehaviour {
 	}
 
 	void OnTriggerExit2D(Collider2D other){
-		Debug.Log ("[NPCInteractable] OnCollisionExit2D");
-
 		if (other.gameObject.tag == "Player") {
-			Debug.Log ("Exited Building CollideBox");
 			Player player = other.gameObject.GetComponent<Player>();
 			player.ClearInteractableObject ();
 			dialogBand.SetActive (false);
