@@ -9,6 +9,10 @@ public class WorldGenerator : MonoBehaviour {
 	public GameObject firePit;
 	public GameObject undergroundCube;
 	public GameObject berlinWall;
+	public GameObject loo;
+	public GameObject brasserie;
+	public GameObject windMill;
+
 	public Sprite[] groundSprites;
 	
 	// Use this for initialization
@@ -16,10 +20,13 @@ public class WorldGenerator : MonoBehaviour {
 	{
 		Texture2D mapPng = Resources.Load ("map") as Texture2D;
 		Color32[] pix = mapPng.GetPixels32();
-		Color32 groundColor = new Color32 (42, 24, 24, 255);
-		Color32 fireColor = new Color32 (255, 0, 0, 255);
+		Color32 groundColor = new Color32 (41, 23, 23, 255);
+		Color32 fireColor = new Color32 (255, 3, 2, 255);
 		Color32 emptyColor = new Color32 (0, 0, 0, 255);
-		Color32 berlinWallColor = new Color32 (255, 128, 0, 255);
+		Color32 berlinWallColor = new Color32 (255, 127, 10, 255);
+		Color32 looColor = new Color32 (0, 255, 0, 255);
+		Color32 brasserieColor = new Color32 (0, 0, 255, 255);
+		Color32 windMillColor = new Color32 (0, 255, 255, 255);
 		int maxX = mapPng.width;
 		int maxY = mapPng.height;
 		int i = 0;
@@ -41,9 +48,21 @@ public class WorldGenerator : MonoBehaviour {
 						y2--;
 					}
 				} else if (pix [x + y * maxX].Equals (fireColor)) {
+					pos.y -= 0.3f;
 					currCube = Instantiate (firePit, pos, Quaternion.identity);
 				} else if (pix [x + y * maxX].Equals (berlinWallColor)) {
 					currCube = Instantiate (berlinWall, pos, Quaternion.identity);
+				} else if (pix [x + y * maxX].Equals (looColor)){
+					pos.y += 0.5f;
+					currCube = Instantiate (loo, pos, Quaternion.identity);
+				} else if (pix [x + y * maxX].Equals (brasserieColor)){
+					pos.y -= 0.5f;
+					currCube = Instantiate (brasserie, pos, Quaternion.identity);
+				} else if (pix [x + y * maxX].Equals (windMillColor)){
+					pos.y += 3.2f;
+					currCube = Instantiate (windMill, pos, Quaternion.identity);
+				} else if (!pix [x + y * maxX].Equals (emptyColor)) {
+					Debug.Log (pix [x + y * maxX]);
 				}
 			}
 		}
