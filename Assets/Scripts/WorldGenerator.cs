@@ -20,6 +20,7 @@ public class WorldGenerator : MonoBehaviour
 	//Done
 	public GameObject windMill;
 	//Done
+	public GameObject spawner;
 	//NPC
 	public GameObject double_sirene;
 	public GameObject witch;
@@ -48,18 +49,6 @@ public class WorldGenerator : MonoBehaviour
 		sapin_radioactif
 
 	}
-
-	Texture2D mapPng;
-	Color32[] pix;
-	Color32 groundColor;
-	Color32 fireColor;
-	Color32 emptyColor;
-	Color32 berlinWallColor;
-	Color32 looColor;
-	Color32 brasserieColor;
-	Color32 windMillColor;
-	int maxX;
-	int maxY;
 	
 	// Use this for initialization
 	void Start ()
@@ -73,6 +62,8 @@ public class WorldGenerator : MonoBehaviour
 		Color32 looColor = new Color32 (0, 255, 0, 255);
 		Color32 brasserieColor = new Color32 (0, 0, 255, 255);
 		Color32 windMillColor = new Color32 (0, 255, 255, 255);
+		Color32 spawnerColor = new Color32 (255, 255, 255, 255);
+
 		int maxX = mapPng.width;
 		int maxY = mapPng.height;
 		int i = 0;
@@ -114,6 +105,9 @@ public class WorldGenerator : MonoBehaviour
 				} else if (pix [x + y * maxX].Equals (windMillColor)) {
 					pos.y += 3.2f;
 					currCube = Instantiate (windMill, pos, Quaternion.identity);
+				} else if (pix [x + y * maxX].Equals (spawnerColor)) {
+					pos.y -= 3.2f;
+					currCube = Instantiate (spawner, pos, Quaternion.identity);
 				} else if (!pix [x + y * maxX].Equals (emptyColor)) {
 					Debug.Log (pix [x + y * maxX]);
 				}
@@ -132,7 +126,6 @@ public class WorldGenerator : MonoBehaviour
 		Vector2 position;
 		Array values = Enum.GetValues (typeof(deco));
 		deco chosen = (deco)values.GetValue (UnityEngine.Random.Range (0, values.Length));
-		print (chosen);
 		switch (chosen) {
 		case deco.arbreRadioactif:
 			position = new Vector2 (pos.x, pos.y + 0.5f);

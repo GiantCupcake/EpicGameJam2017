@@ -6,6 +6,7 @@ public class EnemyController : MonoBehaviour {
 
 	public float roamDistance = 5f;
 	public float speed = 1f;
+	public int hp = 20;
 
 	private bool moving;
 	private float startingPos = 0f;
@@ -15,6 +16,15 @@ public class EnemyController : MonoBehaviour {
 	private Rigidbody2D rb2D;
 	private int jumpTimer;
 
+	void die(){
+		Destroy (this);
+	}
+
+	void takeDamage(int dmg){
+		hp -= dmg;
+		if (hp <= 0)
+			die ();
+	}
 
 	void moveToGoal(){
 		moving = true;
@@ -24,6 +34,8 @@ public class EnemyController : MonoBehaviour {
 	}
 
 	void jump(){
+		if (speed <= 0)
+			return;
 		rb2D.AddForce(new Vector2(0.5f, 230));
 		jumpTimer = Mathf.RoundToInt(Time.time + Mathf.RoundToInt(Random.Range (2, 4)));
 	}
@@ -47,6 +59,17 @@ public class EnemyController : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other){
 		if (other.tag == "BerlinWall") {
 			speed = 0f;
+		} else if (other.tag == "player"){
+			Debug.Log (other.tag);
+		}
+	}
+
+	void OnCollisionEnter2D(Collider2D other){
+	}
+
+	void OnTriggerExit2D(Collider2D other){
+		if (other.tag == "BerlinWall") {
+			speed = 1f;
 		}
 	}
 }

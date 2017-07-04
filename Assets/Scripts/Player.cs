@@ -47,14 +47,14 @@ public class Player : MonoBehaviour {
     public bool takeDamage(int _d)
     {
         this.pv -= _d;
-		if (_d < 0) {
-			Debug.Log ("GameEnded");
-			Application.Quit ();
+		if (pv <= 0) {
+			gameOver ();
 			return true;
 		}
         else
             return false;
     }
+
     void updateBuffer()
     {
         bufferCounter++;
@@ -64,6 +64,11 @@ public class Player : MonoBehaviour {
 
         }
     }
+
+	void gameOver(){
+		Debug.Log ("GameEnded");
+	}
+
     void HandleControl()
     {
         if (Input.GetKey(KeyCode.A))
@@ -108,9 +113,7 @@ public class Player : MonoBehaviour {
              *  saut fixe
              */
             if (isGrounded)
-            {
                 rig.AddForce(new Vector2(this.rig.velocity.x, jumpForce));
-            }
         }
 
 		if (Input.GetKeyDown(KeyCode.Return))
@@ -133,5 +136,19 @@ public class Player : MonoBehaviour {
 	public void ClearInteractableObject(){
 		this.interactableObject = null;
 		textInteract.enabled = false;
+	}
+
+	void OnTriggerEnter2D(Collider2D other){
+		if (other.tag == "Enemy")
+			getWrecked (other.transform.position);
+	}
+
+	void OnCollisionEnter2D(Collider2D other){
+
+	}
+
+	public void getWrecked(Vector3 enemyPos){
+		takeDamage (5);
+		rig.AddForce ((transform.position - enemyPos) * 300);
 	}
 }
